@@ -13,23 +13,19 @@ for (j = 0; j <= 9; j++)
 int m = j * i;
 if (j == 0)
 {
-if (i == 0)
-{
-_putchar(m + 48);
+_putchar('0');
 }
-else
+else if (m <= 9)
 {
-_putchar(m + 48);
-}
+_putchar(',');
+_putchar(' ');
+_putchar(' ');
+_putchar(m + '0');
 }
 else
 {
 _putchar(',');
 _putchar(' ');
-if (m <= 9)
-{
-_putchar(' ');
-}
 _putchar(m / 10 + 48);
 _putchar(m % 10 + 48);
 }
