@@ -1,21 +1,23 @@
 #include <stdio.h>
 /**
  * main - main function
- * Return: nothing
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
-int first = 1, second = 2, next;
 int count = 0;
-printf("%d, %d", first, second);
+int a = 1, b = 2;
+printf("%d, %d, ", a, b);
 count += 2;
-while(count < 98)
-{
-next = first + second;
-first = second;
-second = next;
-printf(", %d", next);
+while (count < 98)
+int next = a + b;
+printf("%d", next);
 count++;
+if (count != 98)
+printf(", ");
+}
+a = b;
+b = next;
 }
 printf("\n");
 return (0);
