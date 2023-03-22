@@ -6,16 +6,16 @@
 int main(void)
 {
 int count = 0;
-int a = 1;
-int b = 2;
+int a = 0;
+int b = 1;
 printf("%d, %d, ", a, b);
 count += 2;
-while (count < 98)
+while (count < 100)
 {
 int next = a + b;
 printf("%d", next);
 count++;
-if (count != 98)
+if (count != 100)
 {
 printf(", ");
 }
