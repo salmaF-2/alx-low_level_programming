@@ -1,13 +1,13 @@
 #include "main.h"
 
 /**
- * main - Entry point
+ * main - test the function positive_or_negative
  * Return: Always 0 (Success)
  */
 int main(void)
 {
 int n;
-i = 0;
+n = 0;
 positive_or_negative(n);
 return (0);
 }
