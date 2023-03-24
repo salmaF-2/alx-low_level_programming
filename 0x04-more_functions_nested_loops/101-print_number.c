@@ -1,4 +1,4 @@
-#inxlude "main.h"
+#include "main.h"
 
 /**
  *  print_number -  checks for a digit (0 through 9)
