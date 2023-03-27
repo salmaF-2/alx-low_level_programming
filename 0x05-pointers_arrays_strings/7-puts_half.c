@@ -19,7 +19,7 @@ j = length / 2;
 }
 else
 {
-j = (length - 1) / 2;
+j = (length + 1) / 2;
 }
 for (i = j; i < length; i++)
 {
