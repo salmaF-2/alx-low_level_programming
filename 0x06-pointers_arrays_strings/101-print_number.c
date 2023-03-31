@@ -5,14 +5,21 @@
  */
 void print_number(int n)
 {
+int digit, divisor = 1;
 if (n < 0)
 {
 _putchar('-');
 n = -n;
 }
-if (n / 10)
+while (n / divisor >= 10)
 {
-print_number(n / 10);
+divisor *= 10;
 }
-_putchar(n % 10 + '0');
+while (divisor != 0)
+{
+digit = n / divisor;
+_putchar(digit + '0');
+n %= divisor;
+divisor /= 10;
+}
 }
