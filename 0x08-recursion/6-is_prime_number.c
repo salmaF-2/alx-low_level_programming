@@ -1,8 +1,9 @@
 #include "main.h"
 /**
- *
- *
- *
+ * mod - check modulo
+ * @a: number an n
+ * @i: other number to check
+ * Return: 1 if true or 0 if false
  */
 int mod(int a, int i)
 {
