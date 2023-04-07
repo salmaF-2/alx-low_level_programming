@@ -1,20 +1,30 @@
 #include "main.h"
+#include <string.h>
 
 /**
- * slen - return length of string
+ * method - test palindrome
  * @s: string
- * Return: length of s
+ * @f: first index
+ * @l: last index
+ * Return: 1 if true, 0 if false
  */
-
-int slen(char *s)
+int method(char *s, int f, int l)
 {
-if (*s == '\0')
+if (f == l)
+{
+return (1);
+}
+else if (f > l)
+{
+return (1);
+}
+else if (s[f] != s[l])
 {
 return (0);
 }
 else
 {
-return (1 + slen(s + 1));
+return (method(s, f + 1, l - 1));
 }
 }
 /**
@@ -25,17 +35,6 @@ return (1 + slen(s + 1));
  */
 int is_palindrome(char *s)
 {
-int len = slen(s);
-if (len <= 1)
-{
-return (1);
-}
-else if (*s == *(s + len - 1))
-{
-return (is_palindrome(s + 1) && 1);
-}
-else
-{
-return (0);
-}
+int len = strlen(s);
+return (method(s, 0, len -  1));
 }
