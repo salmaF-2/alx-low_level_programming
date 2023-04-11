@@ -20,6 +20,6 @@ for (i = 0; i < strlen(str); i++)
 {
 dup[i] = str[i];
 }
-dup[strlen(str)] = '\n';
+dup[strlen(str)] = '\0';
 return (dup);
 }
