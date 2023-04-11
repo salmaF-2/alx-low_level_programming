@@ -7,16 +7,18 @@
  */
 int main(int argc, char *argv[])
 {
-int i, sum = 0;
+int i, sum = 0, j;
 for (i = 1; i < argc; i++)
 {
-int num = atoi(argv[i]);
-if (!isdigit(*argv[i]) || num <= 0)
+for (j = 0; argv[i][j] != '\0'; j++)
+{
+if (!isdigit(argv[i][j]))
 {
 printf("Error\n");
 return (1);
 }
-sum = sum + num;
+sum = sum + atoi(argv[i]);
+}
 }
 printf("%i\n", sum);
 return (0);
