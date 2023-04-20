@@ -4,9 +4,8 @@
  * main - function that prints the opcodes of its own main function
  * @argc: number of arguments passed to the function
  * @argv: array of pointers to arguments
- * Return: always O
+ * Return: always O (success)
  */
 int main(int argc, char **argv)
 {
-
 }
