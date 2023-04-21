@@ -14,10 +14,13 @@ va_start(print, n);
 for (i = 0; i < n; i++)
 {
 char *str = va_arg(print, char *);
-printf("%s", str);
 if (str == NULL)
 {
 printf("(nil)");
+}
+else
+{
+printf("%s", str);
 }
 if (i != (n - 1) && separator != NULL)
 printf("%s", separator);
