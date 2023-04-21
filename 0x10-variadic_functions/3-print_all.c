@@ -16,28 +16,26 @@ char cval;
 const char *p;
 int first_arg = 1;
 va_start(args, format);
-for (p = format; *p; p++)
+p = format;
+while (*p != '\0')
 {
-if (!first_arg && (*(p - 1) == 'c' || *(p - 1) == 'i' ||
-*(p - 1) == 'f' || *(p - 1) == 's'))
+if (*p == 'c')
 {
-printf(", ");
-}
-switch (*p)
-{
-case 'c':
 cval = va_arg(args, int);
 printf("%c", cval);
-break;
-case 'i':
+}
+else if (*p == 'i')
+{
 ival = va_arg(args, int);
 printf("%d", ival);
-break;
-case 'f':
+}
+else if (*p == 'f')
+{
 dval = va_arg(args, double);
 printf("%f", dval);
-break;
-case 's':
+}
+else if (*p == 's')
+{
 sval = va_arg(args, char *);
 if (sval == NULL)
 {
@@ -47,11 +45,15 @@ else
 {
 printf("%s", sval);
 }
-break;
-default:
-continue;
 }
-first_arg = 0;
+p++;
+if (*p != '\0' && (*p == 'c' ||
+*p == 'i' ||
+*p == 'f' ||
+*p == 's'))
+{
+printf(", ");
+}
 }
 printf("\n");
 va_end(args);
