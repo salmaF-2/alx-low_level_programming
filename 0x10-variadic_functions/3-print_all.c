@@ -72,22 +72,21 @@ variable_type var[] = {
 {'\0', NULL}
 };
 va_start(arg_variables, format);
+while (format && format[i])
+{
 j = 0;
-while (format && format[j])
+while (var[j].type)
 {
-i = 0;
-while (var[i].type)
-{
-if (format[j] == var[i].type)
+if (format[i] == var[j].type)
 {
 printf("%s", sep);
 var[i].f(arg_variables);
 sep = ", ";
 break;
 }
-i++;
-}
 j++;
+}
+i++;
 }
 printf("\n");
 va_end(arg_variables);
