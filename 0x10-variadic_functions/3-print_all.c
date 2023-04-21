@@ -1,91 +1,95 @@
+#include "variadic_functions.h"
+#include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include "variadic_functions.h"
 /**
- * print_c - prints char
- * @a: list to give
- * Return: always 0
+ * struct variable_type - Struct variable_type
+ * @type: The data type
+ * @f: The function pointer
  */
-int print_c(va_list a)
+typedef struct variable_type
 {
-	printf("%c", va_arg(a, int));
-	return (0);
-}
-/**
- * print_i - prints int
- * @a: list to give
- * Return: always 0
- */
-int print_i(va_list a)
-{
-	printf("%d", va_arg(a, int));
-	return (0);
-}
-/**
- * print_f - prints float
- * @a: list to give
- * Return: always 0
- */
-int print_f(va_list a)
-{
-	printf("%f", va_arg(a, double));
-	return (0);
-}
-/**
- * print_s - prints string
- * @a: list to give
- * Return: always 0
- */
-int print_s(va_list a)
-{
-	char *s;
+char type;
+void (*f)(va_list);
+} variable_type;
 
-	s = va_arg(a, char *);
-	if (s == NULL)
-	{
-		printf("(nil)");
-		return (0);
-	}
-	printf("%s", s);
-	return (0);
+/**
+ * printf_c - print a character.
+ * @arg_variables: list of arguments.
+ * Return: void
+ */
+void printf_c(va_list arg_variables)
+{
+printf("%c", va_arg(arg_variables, int));
 }
 /**
- * print_all - prints all
- * @format: format string that says arg types
+ * printf_i - print an integer.
+ * @arg_variables: arguments
+ * Return: void
+ */
+void printf_i(va_list arg_variables)
+{
+printf("%i", va_arg(arg_variables, int));
+}
+/**
+ * printf_f - print a float.
  *
+ * @arg_variables: list of arguments.
+ */
+void printf_f(va_list arg_variables)
+{
+printf("%f", va_arg(arg_variables, double));
+}
+/**
+ * printf_s - print a string.
+ * @arg_variables: arguments
+ * Return: void
+ */
+void printf_s(va_list arg_variables)
+{
+char *p;
+p = va_arg(arg_variables, char *);
+if (p == NULL)
+p = "(nil)";
+printf("%s", p);
+}
+/**
+ * print_all - prints all.
+ * @format: last argument.
+ * Return: void
  */
 void print_all(const char * const format, ...)
 {
-	int i, j;
-	char *sep = "";
-	char *sep2 = ", ";
-	va_list anyArgs;
-	printer ops[] = {
-		{"c", print_c},
-		{"i", print_i},
-		{"s", print_s},
-		{"f", print_f},
-		{NULL, NULL}
-	};
-
-	va_start(anyArgs, format);
-	i = 0;
-	while (format != NULL && format[i])
-	{
-		j = 0;
-		while (ops[j].f != NULL)
-		{
-			if (format[i] == *(ops[j].c))
-			{
-				printf("%s", sep);
-				ops[j].f(anyArgs);
-			}
-			j++;
-		}
-		sep = sep2;
-		i++;
-	}
-	printf("\n");
-	va_end(anyArgs);
+int i = 0;
+int j = 0;
+char *sep = "";
+va_list arg_variables;
+variable_type var[] = {
+{'c', printf_c},
+{'i', printf_i},
+{'f', printf_f},
+{'s', printf_s},
+{'\0', NULL}
+};
+va_start(arg_variables, format);
+j = 0;
+while (format && format[j])
+{
+i = 0;
+while (var[i].type)
+{
+if (format[j] == var[i].type)
+{
+printf("%s", sep);
+var[i].f(arg_variables);
+sep = ", ";
+break;
 }
+i++;
+}
+j++;
+}
+printf("\n");
+va_end(arg_variables);
+}
+
