@@ -1,54 +1,95 @@
-#include <stdarg.h>
-#include <stdio.h>
 #include "variadic_functions.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
 /**
- * print_all - function that prints anything.
- * @format:  list of types of arguments
+ * struct variable_type - Struct variable_type
+ * @type: The data type
+ * @f: The function pointer
+ */
+typedef struct variable_type
+{
+char type;
+void (*f)(va_list);
+} variable_type;
+
+/**
+ * printf_c - print a character.
+ * @arg_variables: list of arguments.
+ * Return: void
+ */
+void printf_c(va_list arg_variables)
+{
+printf("%c", va_arg(arg_variables, int));
+}
+/**
+ * printf_i - print an integer.
+ * @arg_variables: arguments
+ * Return: void
+ */
+void printf_i(va_list arg_variables)
+{
+printf("%i", va_arg(arg_variables, int));
+}
+/**
+ * printf_f - print a float.
+ *
+ * @arg_variables: list of arguments.
+ */
+void printf_f(va_list arg_variables)
+{
+printf("%f", va_arg(arg_variables, double));
+}
+/**
+ * printf_s - print a string.
+ * @arg_variables: arguments
+ * Return: void
+ */
+void printf_s(va_list arg_variables)
+{
+char *p;
+p = va_arg(arg_variables, char *);
+if (p == NULL)
+p = "(nil)";
+printf("%s", p);
+}
+/**
+ * print_all - prints all.
+ * @format: last argument.
+ * Return: void
  */
 void print_all(const char * const format, ...)
 {
-	    va_list args;
-	        char *sval;
-		    int ival;
-		        double dval;
-			    char cval;
-			        const char *p;
-				    int first_arg = 1;
-
-				        va_start(args, format);
-					    for (p = format; *p; p++) {
-						            if (!first_arg && (*(p-1) == 'c' || *(p-1) == 'i' || *(p-1) == 'f' || *(p-1) == 's')) {
-								                printf(", ");
-										        }
-
-							            switch (*p) {
-									            case 'c':
-											                cval = va_arg(args, int);
-													            printf("%c", cval);
-														                break;
-																        case 'i':
-																            ival = va_arg(args, int);
-																	                printf("%d", ival);
-																			            break;
-																				            case 'f':
-																				                dval = va_arg(args, double);
-																						            printf("%f", dval);
-																							                break;
-																									        case 's':
-																									            sval = va_arg(args, char *);
-																										                if (sval == NULL) {
-																													                printf("(nil)");
-																															            } else {
-																																	                    printf("%s", sval);
-																																			                }
-																												            break;
-																													            default:
-																													                continue;
-																															        }
-								            first_arg = 0;
-									        }
-
-					        printf("\n");
-						    va_end(args);
+int i = 0;
+int j = 0;
+char *sep = "";
+va_list arg_variables;
+variable_type var[] = {
+{'c', printf_c},
+{'i', printf_i},
+{'f', printf_f},
+{'s', printf_s},
+{'\0', NULL}
+};
+va_start(arg_variables, format);
+j = 0;
+while (format && format[j])
+{
+i = 0;
+while (var[i].type)
+{
+if (format[j] == var[i].type)
+{
+printf("%s", sep);
+var[i].f(arg_variables);
+sep = ", ";
+break;
+}
+i++;
+}
+j++;
+}
+printf("\n");
+va_end(arg_variables);
 }
 
