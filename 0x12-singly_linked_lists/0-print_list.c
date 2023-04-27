@@ -1,4 +1,4 @@
-#include "main.h"
+#include "lists.h"
 #include <stdio.h>
 #include <stdlib.h>
 /**
@@ -10,7 +10,7 @@ size_t print_list(const list_t *h)
 {
 size_t i;
 const list_t *temp = h;
-for (i = 0; temp != NULL; temp = temp->next;)
+for (i = 0; temp != NULL; temp = temp->next)
 {
 if (temp->str != NULL)
 {
