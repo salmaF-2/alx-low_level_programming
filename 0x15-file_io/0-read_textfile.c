@@ -14,22 +14,16 @@ FILE *F = fopen(filename, "r");
 char *buffer = (char *) malloc((letters + 1) * sizeof(char));
 ssize_t total_letters = 0;
 size_t readl;
-if (filename == NULL)
-{
-return (0);
-}
-if (F == NULL)
-{
-return (0);
-}
-if (buffer == NULL)
+if (filename == NULL || F == NULL || buffer == NULL)
 {
 fclose(F);
+free(buffer);
 return (0);
 }
 while ((readl = fread(buffer, sizeof(char), letters, F)) > 0)
 {
-if (fwrite(buffer, sizeof(char), readl, stdout) != readl)
+if (fwrite(buffer, sizeof(char), readl,
+fdopen(STDOUT_FILENO, "w")) != readl)
 {
 free(buffer);
 fclose(F);
