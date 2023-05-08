@@ -11,7 +11,7 @@
 ssize_t read_textfile(const char *filename, size_t letters)
 {
 FILE *F = fopen(filename, "r");
-char *buffer = (char*) malloc((letters + 1) * sizeof(char));
+char *buffer = (char *) malloc((letters + 1) * sizeof(char));
 ssize_t total_letters = 0;
 size_t readl;
 if (filename == NULL)
@@ -29,8 +29,7 @@ return (0);
 }
 while ((readl = fread(buffer, sizeof(char), letters, F)) > 0)
 {
-if (fwrite(buffer, sizeof(char), readl,
-fdopen(STDOUT_FILENO, "w")) != readl)
+if (fwrite(buffer, sizeof(char), readl, stdout) != readl)
 {
 free(buffer);
 fclose(F);
@@ -38,13 +37,16 @@ return (0);
 }
 total_letters += readl;
 }
-if (ferror(F))
+if (feof(F))
+{
+fclose(F);
+free(buffer);
+return (total_letters);
+}
+else
 {
 fclose(F);
 free(buffer);
 return (0);
 }
-fclose(F);
-free(buffer);
-return (total_letters);
 }
