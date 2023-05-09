@@ -16,6 +16,11 @@ if (filename == NULL)
 return (-1);
 if (f == NULL)
 return (-1);
+if (text_content == NULL)
+{
+fclose(f);
+return (1);
+}
 if (text_content != NULL)
 {
 fwrite(text_content, sizeof(char), length, f);
