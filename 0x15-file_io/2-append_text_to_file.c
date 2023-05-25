@@ -10,21 +10,20 @@
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-FILE *f = fopen(filename, "a");
-size_t length = strlen(text_content);
+int a;
+int b;
+int l = 0;
 if (filename == NULL)
 return (-1);
-if (f == NULL)
-return (-1);
-if (text_content == NULL)
-{
-fclose(f);
-return (1);
-}
 if (text_content != NULL)
 {
-fwrite(text_content, sizeof(char), length, f);
+for (l = 0; text_content[l];)
+l++;
 }
-fclose(f);
+a = open(filename, O_WRONLY | O_APPEND);
+b = write(a, text_content, l);
+if (a == -1 || b == -1)
+return (-1);
+close(a);
 return (1);
 }
