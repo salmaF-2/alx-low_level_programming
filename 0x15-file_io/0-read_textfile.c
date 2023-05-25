@@ -10,29 +10,29 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-FILE *F;
+FILE *fp;
 char *buffer;
 ssize_t total_letters = 0;
 size_t readl;
 if (filename == NULL)
 return (0);
-F = fopen(filename, "r");
-if (F == NULL)
+fp = fopen(filename, "r");
+if (fp == NULL)
 return (0);
 buffer = malloc((letters + 1) * sizeof(char));
 if (buffer == NULL)
 {
-fclose(F);
+fclose(fp);
 return (0);
 }
-readl = fread(buffer, sizeof(char), letters, F);
+readl = fread(buffer, sizeof(char), letters, fp);
 if (readl > 0)
 {
 total_letters += readl;
 buffer[readl] = '\0';
-printf("%s", buffer);
+fprintf(stderr,"%s", buffer);
 }
 free(buffer);
-fclose(F);
+fclose(fp);
 return (total_letters);
 }
