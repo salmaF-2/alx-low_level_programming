@@ -10,30 +10,29 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-FILE *F = fopen(filename, "r");
-char *buffer = (char *) malloc((letters + 1) * sizeof(char));
+FILE *F;
+char *buffer;
 ssize_t total_letters = 0;
 size_t readl;
 if (filename == NULL)
 return (0);
+F = fopen(filename, "r");
 if (F == NULL)
 return (0);
+buffer = malloc((letters + 1) * sizeof(char));
 if (buffer == NULL)
-return (0);
-while ((readl = fread(buffer, sizeof(char), letters, F)) > 0)
 {
-if (fwrite(buffer, sizeof(char), readl,
-fdopen(STDOUT_FILENO, "w")) != readl)
-{
-free(buffer);
 fclose(F);
 return (0);
 }
+readl = fread(buffer, sizeof(char), letters, F);
+if (readl > 0)
+{
 total_letters += readl;
+buffer[readl] = '\0';
+printf("%s", buffer);
 }
 free(buffer);
 fclose(F);
-if (ferror(F))
-return (0);
 return (total_letters);
 }
