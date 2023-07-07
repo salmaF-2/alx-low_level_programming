@@ -20,5 +20,5 @@ return (NULL);
 for (i = 0; i < size; i++)
 ht->array[i] = NULL;
 ht->size = size;
-return ht;
+return (ht);
 }
